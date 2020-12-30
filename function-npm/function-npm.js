@@ -8,7 +8,9 @@ module.exports = function(RED) {
     var strip = require('strip-comments');
     var temp = require('temp').track();
     var { npmInstallTo } = require('npm-install-to');
-        
+    var _ = require('underscore');
+    var async = require('async');
+
     /*start global variables*/
     
     //one common temp dir for all instances
@@ -179,11 +181,12 @@ module.exports = function(RED) {
             send(msgs);
         }
     }
-    function FunctionNpmNode(n) {  //Name Change
+    function AsyncFunctionNpmNode(n) {  //Name Change
         RED.nodes.createNode(this,n);
         var node = this;
         node.name = n.name;
         node.func = n.func;
+        node.async = n.async;
         var handleNodeDoneCall = true;
         // Check to see if the Function appears to call `node.done()`. If so,
         // we will assume it is well written and does actually call node.done().
@@ -194,6 +197,7 @@ module.exports = function(RED) {
         var functionText = "var results = null;"+
                            "results = (function(msg,__send__,__done__){ "+
                               "var __msgid__ = msg._msgid;"+
+                              node.async+"\n"+
                               "var node = {"+
                                  "id:__node__.id,"+
                                  "name:__node__.name,"+
@@ -213,6 +217,8 @@ module.exports = function(RED) {
         node.outstandingTimers = [];
         node.outstandingIntervals = [];
         var sandbox = {
+            _: _,
+            async: async,
             console:console,
             util:util,
             Buffer:Buffer,
@@ -503,6 +509,6 @@ module.exports = function(RED) {
             node.error(err);
         }
     }
-    RED.nodes.registerType("function-npm",FunctionNpmNode);
+    RED.nodes.registerType("async-function-npm",AsyncFunctionNpmNode);
     RED.library.register("functions");
 };

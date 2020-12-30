@@ -1,11 +1,11 @@
 {
-  "name": "node-red-contrib-function-npm",
+  "name": "node-red-contrib-async-function-npm",
   "version": "0.4.1",
-  "description": "A function node for Node-RED with npm load capabilities",
+  "description": "A function node for Node-RED with npm load capabilities and async",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ntsaini/node-red-contrib-function-npm"
+    "url": "https://github.com/sdgandhi/node-red-contrib-async-function-npm"
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""
@@ -13,20 +13,23 @@
   "dependencies": {
     "npm-install-to": "^3.0.1",
     "strip-comments": "^2.0.1",
-    "temp": "^0.9.1"
+    "temp": "^0.9.1",
+    "underscore": "1.9.1",
+    "async": "2.6.1"
   },
   "keywords": [
     "function-npm",
-    "node-red"
+    "node-red",
+    "async"
   ],
   "node-red": {
     "nodes": {
-      "function-npm": "function-npm/function-npm.js"
+      "async-function-npm": "function-npm/function-npm.js"
     }
   },
   "author": {
-    "name": "Nishant Saini",
-    "email": "nishantsaini@outlook.com"
+    "name": "SG",
+    "email": "sdgandhi@users.noreply.github.com"
   },
   "devDependencies": {
     "auto-changelog": "^2.0.0",
